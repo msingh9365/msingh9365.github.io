@@ -48,16 +48,14 @@ Then visit `http://localhost:8080`
 
 ## Deploy to GitHub Pages
 
-1. Push this folder to a GitHub repo named `<your-username>.github.io`
+1. Go to GitHub and create a new public repository named `msingh9365.github.io`. **Do not** initialize it with a README, .gitignore, or license.
+2. Open your terminal in this folder and run:
    ```bash
-   git init
-   git add .
-   git commit -m "Initial portfolio"
    git remote add origin https://github.com/msingh9365/msingh9365.github.io.git
    git push -u origin main
    ```
-2. Go to **Settings → Pages** → set source to `main` branch, `/ (root)`
-3. Your site will be live at `https://msingh9365.github.io/`
+3. On GitHub, go to your repository **Settings → Pages** → set source to `main` branch, `/ (root)`.
+4. Your site will be live at `https://msingh9365.github.io/`
 
 ---
 
