@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manish Singh | AI Engineer & Data Engineer</title>
+  <meta name="description" content="Portfolio of Manish Singh — AI Software Engineer at Intel, M.Tech at IIT Ropar. Expert in AI/ML, NLP, Big Data, and scalable systems." />
+  <meta name="keywords" content="Manish Singh, AI Engineer, Data Engineer, Machine Learning, NLP, IIT Ropar, Intel, Portfolio" />
+  <meta name="author" content="Manish Singh" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Manish Singh | AI Engineer & Data Engineer" />
+  <meta property="og:description" content="Portfolio of Manish Singh — AI/ML, NLP, Big Data specialist. Currently at Intel, M.Tech at IIT Ropar." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://msingh9365.github.io/" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════ NAVBAR ═══════════════════════════════════════ -->
+  <nav id="navbar" aria-label="Main navigation">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo" id="nav-logo-link">MS</a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about" id="nav-about">About</a></li>
+        <li><a href="#experience" id="nav-experience">Experience</a></li>
+        <li><a href="#projects" id="nav-projects">Projects</a></li>
+        <li><a href="#skills" id="nav-skills">Skills</a></li>
+        <li><a href="#coding-profiles" id="nav-coding">Coding</a></li>
+        <li><a href="#education" id="nav-education">Education</a></li>
+        <li><a href="#contact" id="nav-contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════ HERO ═══════════════════════════════════════ -->
+  <section id="home" class="hero">
+    <canvas id="particles-canvas" aria-hidden="true"></canvas>
+    <div class="hero-content">
+      <div class="hero-badge reveal">
+        <span class="badge-dot"></span>
+        Available for opportunities
+      </div>
+      <h1 class="hero-name reveal">Manish Singh</h1>
+      <p class="hero-subtitle reveal">
+        <span class="static-text">I build as a </span>
+        <span id="typed-text" class="typed-text" aria-live="polite"></span>
+        <span class="cursor" aria-hidden="true">|</span>
+      </p>
+      <p class="hero-desc reveal">
+        AI Software Engineer at Intel · M.Tech at IIT Ropar · Crafting intelligent systems at the intersection of AI, NLP, and Big Data.
+      </p>
+      <div class="hero-cta reveal">
+        <a href="#projects" id="hero-view-projects" class="btn btn-primary">View Projects</a>
+        <a href="assets/resume.pdf" id="hero-download-resume" class="btn btn-secondary" download>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Resume
+        </a>
+      </div>
+      <div class="hero-socials reveal">
+        <a href="https://github.com/msingh9365/" id="hero-github" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/msingh9365/" id="hero-linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="https://leetcode.com/u/msingh9365/" id="hero-leetcode" target="_blank" rel="noopener noreferrer" aria-label="LeetCode">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z"/></svg>
+        </a>
+        <a href="mailto:msingh9365@gmail.com" id="hero-email" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator" aria-hidden="true">
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ ABOUT ═══════════════════════════════════════ -->
+  <section id="about" class="section about-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">About Me</span>
+        <h2 class="section-title">Who I Am</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-avatar reveal">
+          <div class="avatar-ring">
+            <div class="avatar-placeholder" aria-label="Manish Singh avatar">
+              <span>MS</span>
+            </div>
+          </div>
+          <div class="avatar-glow" aria-hidden="true"></div>
+        </div>
+        <div class="about-text reveal">
+          <p>
+            I'm a <strong>AI Software Engineer Graduate Intern at Intel</strong>, Bengaluru, where I build agentic AI frameworks and autonomous agent architectures for performance profiling and system-level workflow automation.
+          </p>
+          <p>
+            Currently pursuing my <strong>M.Tech in Computer Science Engineering</strong> at the <strong>Indian Institute of Technology, Ropar</strong> (CGPA: 8.3), I bring over 3 years of industry experience as a Specialist Programmer at <strong>Infosys</strong>, where I engineered large-scale Spark data pipelines on Azure, reducing processing times by up to 30%.
+          </p>
+          <p>
+            My passion lies at the intersection of <strong>AI/ML, NLP, and Big Data</strong> — building scalable, intelligent systems that solve real-world problems.
+          </p>
+          <div class="about-contact">
+            <a href="mailto:msingh9365@gmail.com" id="about-email-link" class="about-email">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              msingh9365@gmail.com
+            </a>
+          </div>
+          <div class="about-stats">
+            <div class="stat-item">
+              <span class="stat-number">3+</span>
+              <span class="stat-label">Years Experience</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">5+</span>
+              <span class="stat-label">Projects Built</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">8.3</span>
+              <span class="stat-label">M.Tech CGPA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ EXPERIENCE ═══════════════════════════════════════ -->
+  <section id="experience" class="section experience-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Career</span>
+        <h2 class="section-title">Work Experience</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card glass">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">AI Software Engineer Graduate Intern</h3>
+                <p class="timeline-company">Intel</p>
+              </div>
+              <div class="timeline-meta">
+                <span class="timeline-period">Jul 2025 – Present</span>
+                <span class="timeline-location">Bengaluru</span>
+              </div>
+            </div>
+            <ul class="timeline-bullets">
+              <li>Building agentic AI frameworks to automate and optimize AI workload development, integrating tool-calling and multi-step task orchestration across software and infrastructure layers.</li>
+              <li>Collaborating on the design of autonomous AI agent architectures to support performance profiling and system-level workflow automation, aligned with Intel's AI SoC development goals.</li>
+            </ul>
+            <div class="timeline-tags">
+              <span class="tag">Agentic AI</span>
+              <span class="tag">LLMs</span>
+              <span class="tag">Python</span>
+              <span class="tag">AI Frameworks</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card glass">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">Specialist Programmer</h3>
+                <p class="timeline-company">Infosys</p>
+              </div>
+              <div class="timeline-meta">
+                <span class="timeline-period">Aug 2021 – Oct 2024</span>
+                <span class="timeline-location">Pune</span>
+              </div>
+            </div>
+            <ul class="timeline-bullets">
+              <li>Engineered Spark analytical pipelines in Azure HDInsight, orchestrating data processing through Azure Data Factory; extracted actionable insights from datasets, reducing processing time by <strong>30%</strong>.</li>
+              <li>Optimized pipeline performance, resulting in a <strong>25% reduction</strong> in total processing time.</li>
+              <li>Developed robust CI/CD pipelines using Azure DevOps; reduced deployment time by <strong>40%</strong> and increased release frequency from monthly to bi-weekly.</li>
+            </ul>
+            <div class="timeline-tags">
+              <span class="tag">Azure HDInsight</span>
+              <span class="tag">Spark</span>
+              <span class="tag">Scala</span>
+              <span class="tag">Azure DevOps</span>
+              <span class="tag">Azure Data Factory</span>
+              <span class="tag">Azure SQL</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ PROJECTS ═══════════════════════════════════════ -->
+  <section id="projects" class="section projects-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Work</span>
+        <h2 class="section-title">Projects</h2>
+      </div>
+      <div class="filter-tabs reveal" role="tablist" aria-label="Filter projects by category">
+        <button class="filter-btn active" data-filter="all" id="filter-all" role="tab" aria-selected="true">All</button>
+        <button class="filter-btn" data-filter="ai-ml" id="filter-ai-ml" role="tab" aria-selected="false">AI / ML</button>
+        <button class="filter-btn" data-filter="nlp" id="filter-nlp" role="tab" aria-selected="false">NLP</button>
+        <button class="filter-btn" data-filter="big-data" id="filter-big-data" role="tab" aria-selected="false">Big Data</button>
+        <button class="filter-btn" data-filter="full-stack" id="filter-full-stack" role="tab" aria-selected="false">Full-Stack</button>
+        <button class="filter-btn" data-filter="coursework" id="filter-coursework" role="tab" aria-selected="false">Course Work / Minor</button>
+      </div>
+      <div class="projects-grid" id="projects-grid" role="list">
+        <!-- Dynamically populated by script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ SKILLS ═══════════════════════════════════════ -->
+  <section id="skills" class="section skills-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Expertise</span>
+        <h2 class="section-title">Technical Skills</h2>
+      </div>
+      <div class="skills-grid" id="skills-grid">
+        <!-- Dynamically populated by script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ CODING PROFILES ═══════════════════════════════════════ -->
+  <section id="coding-profiles" class="section profiles-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Competitive Programming</span>
+        <h2 class="section-title">Coding Profiles</h2>
+      </div>
+      <div class="profiles-grid" id="profiles-grid" role="list">
+        <!-- Dynamically populated by script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ EDUCATION ═══════════════════════════════════════ -->
+  <section id="education" class="section education-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Academic Background</span>
+        <h2 class="section-title">Education</h2>
+      </div>
+      <div class="education-grid">
+
+        <div class="edu-card glass reveal">
+          <div class="edu-logo-wrap">
+            <img src="assets/images/logo_iitrpr.png" alt="IIT Ropar logo" class="edu-logo" loading="lazy" />
+          </div>
+          <div class="edu-badge">M.Tech</div>
+          <div class="edu-content">
+            <h3 class="edu-degree">Master of Technology</h3>
+            <p class="edu-field">Computer Science Engineering</p>
+            <p class="edu-institution">Indian Institute of Technology, Ropar</p>
+            <div class="edu-meta">
+              <span class="edu-score">CGPA: 8.3</span>
+              <span class="edu-year">Graduating in 2027</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="edu-card glass reveal">
+          <div class="edu-logo-wrap">
+            <img src="assets/images/logo_hit.webp" alt="Haldia Institute of Technology logo" class="edu-logo" loading="lazy" />
+          </div>
+          <div class="edu-badge">B.Tech</div>
+          <div class="edu-content">
+            <h3 class="edu-degree">Bachelor of Technology</h3>
+            <p class="edu-field">Electronics &amp; Communication Engineering</p>
+            <p class="edu-institution">Haldia Institute of Technology, West Bengal</p>
+            <div class="edu-meta">
+              <span class="edu-score">CGPA: 9.06</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="edu-card glass reveal">
+          <div class="edu-logo-wrap">
+            <img src="assets/images/logo_kv.svg" alt="Kendriya Vidyalaya logo" class="edu-logo" loading="lazy" />
+          </div>
+          <div class="edu-badge">12th</div>
+          <div class="edu-content">
+            <h3 class="edu-degree">Senior Secondary (Science)</h3>
+            <p class="edu-field">CBSE Board</p>
+            <p class="edu-institution">Kendriya Vidyalaya</p>
+            <div class="edu-meta">
+              <span class="edu-score">91.6%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="edu-card glass reveal">
+          <div class="edu-logo-wrap">
+            <img src="assets/images/logo_kv.svg" alt="Kendriya Vidyalaya logo" class="edu-logo" loading="lazy" />
+          </div>
+          <div class="edu-badge">10th</div>
+          <div class="edu-content">
+            <h3 class="edu-degree">Secondary (Class X)</h3>
+            <p class="edu-field">CBSE Board</p>
+            <p class="edu-institution">Kendriya Vidyalaya</p>
+            <div class="edu-meta">
+              <span class="edu-score">CGPA: 10.0</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ ACHIEVEMENTS ═══════════════════════════════════════ -->
+  <section id="achievements" class="section achievements-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Milestones</span>
+        <h2 class="section-title">Achievements</h2>
+      </div>
+      <div class="achievements-grid">
+
+        <div class="achievement-card glass reveal">
+          <div class="achievement-icon" aria-hidden="true">🏆</div>
+          <div class="achievement-content">
+            <h3 class="achievement-title">GATE CSE Score: 739</h3>
+            <p class="achievement-desc">Achieved a competitive score in the Graduate Aptitude Test in Engineering for Computer Science.</p>
+            <span class="achievement-year">2025</span>
+          </div>
+        </div>
+
+        <div class="achievement-card glass reveal">
+          <div class="achievement-icon" aria-hidden="true">⭐</div>
+          <div class="achievement-content">
+            <h3 class="achievement-title">Outstanding Performance Rating</h3>
+            <p class="achievement-desc">Received outstanding performance rating for exemplary project contributions and dedication at Infosys.</p>
+            <span class="achievement-year">2022</span>
+          </div>
+        </div>
+
+        <div class="achievement-card glass reveal">
+          <div class="achievement-icon" aria-hidden="true">🏅</div>
+          <div class="achievement-content">
+            <h3 class="achievement-title">INSTA Award</h3>
+            <p class="achievement-desc">Certificate of Appreciation for Excellent Performance in a project from Infosys.</p>
+            <span class="achievement-year">2022</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ CONTACT ═══════════════════════════════════════ -->
+  <section id="contact" class="section contact-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Get In Touch</span>
+        <h2 class="section-title">Let's Connect</h2>
+        <p class="section-subtitle reveal">Open to interesting conversations, collaborations, and new opportunities.</p>
+      </div>
+      <div class="contact-content">
+        <div class="contact-card glass reveal">
+          <a href="mailto:msingh9365@gmail.com" id="contact-email-link" class="contact-email-link">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            msingh9365@gmail.com
+          </a>
+          <div class="contact-socials">
+            <a href="https://github.com/msingh9365/" id="contact-github" target="_blank" rel="noopener noreferrer" class="contact-social-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/msingh9365/" id="contact-linkedin" target="_blank" rel="noopener noreferrer" class="contact-social-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+          <a href="assets/resume.pdf" id="contact-download-resume" class="btn btn-primary contact-resume-btn" download>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Resume
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">Designed & built by <strong>Manish Singh</strong> · <span id="footer-year"></span></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
