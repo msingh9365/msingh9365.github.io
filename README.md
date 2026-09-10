@@ -6,11 +6,26 @@ Personal portfolio website built with vanilla HTML, CSS, and JavaScript. Hosted 
 
 ---
 
+## Design System
+
+"Warm Technical" — a light, editorial system inspired by product sites like vanna.ai,
+adapted for a portfolio: warm paper background, a slab-serif display face, monospace
+metadata in place of icons/emoji, and flat 2px-bordered cards (no glow, no glass, no
+gradients-as-decoration).
+
+- **Display:** Roboto Slab (headings)
+- **Body:** Space Grotesk
+- **Metadata / labels:** Space Mono — section indices, dates, tech tags
+
+---
+
 ## Tech Stack
 
-- **HTML5** — Semantic structure, SEO meta tags, Open Graph
-- **CSS3** — Custom design system, glassmorphism, animations, responsive
-- **Vanilla JS** — Data-driven rendering, canvas particles, IntersectionObserver
+- **HTML5** — Semantic structure, SEO meta tags, Open Graph, Twitter Card, JSON-LD
+- **CSS3** — Custom design system, CSS custom properties, responsive, `prefers-reduced-motion` aware
+- **Vanilla JS** — Data-driven rendering, `IntersectionObserver` scroll reveals, filter tabs, scroll-spy nav
+
+No build step, no dependencies, no framework.
 
 ---
 
@@ -19,30 +34,23 @@ Personal portfolio website built with vanilla HTML, CSS, and JavaScript. Hosted 
 ```
 portfolio/
 ├── index.html          # Single-page app — all sections
-├── style.css           # Design system + all styles
-├── script.js           # All interactivity + data
+├── style.css            # Design system + all styles
+├── script.js             # All interactivity + data
 └── assets/
-    ├── images/         # Project thumbnail images
-    └── resume.pdf      # Add your resume PDF here
+    ├── images/          # Project thumbnails, logos, favicon, OG image (WebP)
+    │   └── _orig/       # Uncompressed originals, kept for reference (not deployed)
+    └── resume.pdf        # Résumé — powers both "Download CV" buttons
 ```
 
 ---
 
 ## Running Locally
 
-Just open `index.html` in your browser. No build step needed.
-
-Or use a local dev server for best results:
-
 ```bash
-# Python
 python3 -m http.server 8080
-
-# Node (if installed)
-npx serve .
 ```
 
-Then visit `http://localhost:8080`
+Then visit `http://localhost:8080`. No build step needed.
 
 ---
 
@@ -65,7 +73,15 @@ Place your resume PDF at:
 ```
 assets/resume.pdf
 ```
-The "Download Resume" buttons will automatically link to it.
+Both "Download CV" / "Download Résumé" buttons link to it automatically.
+
+---
+
+## Adding a Portrait
+
+The About section ships without a photo. To add one, drop a square image
+(≥ 480×480) at `assets/images/portrait.jpg` and uncomment the `<figure class="about-portrait">`
+block in `index.html` (`#about` section) — the CSS is already in place.
 
 ---
 
@@ -80,29 +96,39 @@ Open `script.js` → find the `projects` array → append:
   id: 'my-new-project',          // unique slug
   title: 'My New Project',
   category: 'ai-ml',             // 'ai-ml' | 'nlp' | 'big-data' | 'full-stack'
-  type: 'featured',              // 'featured' | 'minor'
+  type: 'coursework',            // 'coursework' | 'minor' — controls the card badge text
+  dates: 'Jan 2026 – May 2026',  // or null to omit
   description: 'What it does...',
   tech: ['Python', 'FastAPI'],
   github: 'https://github.com/msingh9365/new-repo',
-  thumb: 'assets/images/thumb_new.jpg',
+  thumb: 'assets/images/thumb_new.webp',
 }
 ```
 
-### Add a Coding Profile
+Filter tabs and the "Course Work / Minor" grouping are driven by `type` and `category` —
+no HTML changes needed.
 
-Open `script.js` → find the `codingProfiles` array → append:
+### Add a Skill Category
+
+Open `script.js` → find the `skills` array → append:
 
 ```js
-{
-  id: 'codechef',
-  name: 'CodeChef',
-  username: 'your_handle',
-  url: 'https://www.codechef.com/users/your_handle',
-  icon: '👨‍💻',
-}
+{ index: '06', name: 'New Category', pills: ['Tool A', 'Tool B'] }
 ```
 
-Supported platforms to add: CodeChef, Codeforces, GeeksForGeeks — just add objects above.
+---
+
+## Image Guidelines
+
+All images ship as WebP. When adding new ones:
+
+```bash
+cwebp -q 78 input.png -o assets/images/output.webp
+```
+
+Project thumbnails are sized at 1000px wide; logos at ~160–320px. Keep individual files
+under ~100 KB where possible — the whole `assets/images/` directory (excluding `_orig/`)
+should stay well under 1 MB.
 
 ---
 
