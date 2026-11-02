@@ -2,7 +2,10 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      # Preview: lets this branch deploy before it is merged. Remove this line after merging.
+      - claude/friendly-cerf-wxp804
   workflow_dispatch:
 
 permissions:
