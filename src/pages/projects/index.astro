@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import { allProjects, tagLabel, yearOf } from '../../lib/projects';
+import { TAGS, TAG_LABELS } from '../../content.config';
+
+const projects = await allProjects();
+const usedTags = TAGS.filter((t) => projects.some((p) => p.data.tag === t));
+---
+<Base title="Projects" description="Projects by Manish Singh: computer vision, NLP, data engineering and full-stack work.">
+  <div class="wrap page">
+    <h1 class="page-title">Projects</h1>
+    <p class="page-lede">What I have built, how it works, and what I decided along the way.</p>
+    <div class="chips" role="group" aria-label="Filter by category">
+      <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+      {usedTags.map((t) => <button type="button" class="chip" data-filter={t} aria-pressed="false">{TAG_LABELS[t]}</button>)}
+    </div>
+    <div class="tiles">
+      {projects.map((p) => (
+        <a class="tile" href={`/projects/${p.id}/`} data-tag={p.data.tag}>
+          <div class="tile-body">
+            <div class="tile-meta"><span class="kicker">{tagLabel(p.data.tag)}</span><span class="meta">{yearOf(p.data.period)}</span></div>
+            <h2 class="tile-title">{p.data.title}</h2>
+            <p class="tile-summary">{p.data.summary}</p>
+            <ul class="stack">{p.data.stack.slice(0, 3).map((s) => <li>{s}</li>)}</ul>
+          </div>
+          <div class="tile-foot"><span>{p.data.kind}</span><span class="tile-cta">Read more →</span></div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('.chip');
+  const tiles = document.querySelectorAll<HTMLElement>('.tile');
+  chips.forEach((chip) =>
+    chip.addEventListener('click', () => {
+      const f = chip.dataset.filter;
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+      tiles.forEach((t) => { t.hidden = f !== 'all' && t.dataset.tag !== f; });
+    }),
+  );
+</script>

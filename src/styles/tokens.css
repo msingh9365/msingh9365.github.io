@@ -1,0 +1,29 @@
+/* Design tokens: every colour and font lives here.
+   Light/dark is chosen by <html data-theme> (the sun/moon button). */
+:root {
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --font-sans: var(--font-mono);
+  --font-display: var(--font-mono);
+  --radius-sm: 0px;
+  --radius: 0px;
+  --radius-lg: 0px;
+  --gutter: 24px;
+  --measure: 1120px;
+}
+
+/* Light: black ink on off-white paper, burnt-orange accent. */
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #fafaf8; --surface: #ffffff;
+  --text: #161616; --muted: #5c5c5c; --line: #dcdcd8;
+  --accent: #b4500c; --onAccent: #ffffff; --warm: #666666;
+}
+
+/* Dark: grey-white on black, bright orange accent. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #111111; --surface: #171717;
+  --text: #e6e6e6; --muted: #a3a3a3; --line: #2c2c2c;
+  --accent: #ff9a3c; --onAccent: #111111; --warm: #b9b9b9;
+}

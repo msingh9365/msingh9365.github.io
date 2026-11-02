@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import NowCard from '../components/NowCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { site } from '../config';
+import { allProjects } from '../lib/projects';
+import { toolbox } from '../data/about';
+
+const projects = await allProjects();
+const featured = projects.filter((p) => p.data.featured);
+const others = projects.filter((p) => !p.data.featured);
+---
+<Base>
+  <div class="wrap home">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="tag-outline">{site.employerLine}</span>
+        <h1>I build <span class="hl">AI agents</span> and the <span class="hl">data pipelines</span> behind them.</h1>
+        <p class="lede">I'm an M.Tech CSE student at IIT Ropar with 3+ years of industry experience at Infosys. I work on agentic AI, NLP and large-scale data pipelines.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="/projects/">See projects</a>
+          <a class="btn" href={site.links.resume}>Resume (PDF)</a>
+        </div>
+        <ul class="facts-row" aria-label="Highlights">
+          <li><b>3+ yrs</b> industry</li>
+          <li><b>8.3</b> CGPA, IIT Ropar</li>
+          <li><b>739</b> GATE CSE</li>
+        </ul>
+      </div>
+      <div class="hero-side"><NowCard /></div>
+    </section>
+
+    <section class="section" aria-labelledby="featured-title">
+      <div class="section-head"><h2 id="featured-title">Featured projects</h2><a href="/projects/">All projects</a></div>
+      <div class="cards">{featured.map((p) => <ProjectCard project={p} />)}</div>
+      <div class="list">
+        {others.map((p) => <div><a class="plain" href={`/projects/${p.id}/`}>{p.data.title}</a><span class="meta">{[p.data.kind, p.data.period].filter(Boolean).join(' · ')}</span></div>)}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="toolbox-title">
+      <div class="section-head"><h2 id="toolbox-title">What I work with</h2><a href="/about/">More about me</a></div>
+      <div class="strip">
+        {toolbox.slice(1, 5).map((t) => <div class="strip-item"><span class="kicker">{t.group}</span><span>{t.items.slice(0, 4).join(', ')}</span></div>)}
+      </div>
+    </section>
+  </div>
+</Base>

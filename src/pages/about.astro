@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../config';
+import { bio, education, careerLog, recognition, toolbox, terminalCard } from '../data/about';
+---
+<Base title="About" description="About Manish Singh: experience, education, skills and how to get in touch.">
+  <div class="wrap page">
+    <h1 class="page-title">About</h1>
+    <div class="about">
+      <div class="about-copy">
+        <p class="bio-lead">{bio[0]}</p>
+        {bio.slice(1).map((b) => <p class="bio-more">{b}</p>)}
+
+        <h2>Education</h2>
+        <div class="edu">
+          {education.map((e) => (
+            <article class="edu-item">
+              <div class="edu-head"><strong>{e.degree}</strong><span class="meta">{e.period}</span></div>
+              <div class="log-org">{e.school}</div>
+              <div class="meta">{e.grade}</div>
+              {e.courses.length > 0 && (
+                <div class="edu-courses">
+                  <span class="kicker">courses</span>
+                  <ul class="toolbox">{e.courses.map((c) => <li>{c}</li>)}</ul>
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
+
+        <h2>Career log</h2>
+        <ol class="log">
+          {careerLog.map((c) => (
+            <li>
+              <span><strong>{c.role}</strong><br /><span class="log-org">{c.org}</span>{c.note && <span class="log-note">{c.note}</span>}</span>
+              <span class="meta">{c.period}</span>
+            </li>
+          ))}
+        </ol>
+
+        <h2>Recognition</h2>
+        <ul class="awards">
+          {recognition.map((r) => <li><span class="meta">{r.year}</span><span>{r.text}</span></li>)}
+        </ul>
+
+        <h2>Toolbox</h2>
+        {toolbox.map((t) => (
+          <div class="toolbox-group">
+            <span class="kicker">{t.group}</span>
+            <ul class="toolbox">{t.items.map((i) => <li>{i}</li>)}</ul>
+          </div>
+        ))}
+
+        <h2>Contact</h2>
+        <p class="bio-more">
+          Open to interesting conversations, collaborations and new opportunities. Email is the best way:{' '}
+          <a href={site.links.email}>{site.links.email.replace('mailto:', '')}</a>
+        </p>
+        <p class="bio-more">
+          <a href={site.links.github}>GitHub</a>{' · '}<a href={site.links.linkedin}>LinkedIn</a>{' · '}<a href={site.links.leetcode}>LeetCode</a>{' · '}<a href={site.links.resume}>Resume (PDF)</a>
+        </p>
+      </div>
+
+      <aside class="about-side" aria-label="Summary">
+        <div class="term">
+          <div class="term-bar"><span></span><span></span><span></span><b>about.txt</b></div>
+          <dl>
+            {terminalCard.map((r) => <div><dt>{r.key}</dt><dd>{r.value}</dd></div>)}
+          </dl>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Base>
