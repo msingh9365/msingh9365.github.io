@@ -6,7 +6,7 @@ import { TAGS, TAG_LABELS } from '../../content.config';
 const projects = await allProjects();
 const usedTags = TAGS.filter((t) => projects.some((p) => p.data.tag === t));
 ---
-<Base title="Projects" description="Projects by Manish Singh: computer vision, NLP, data engineering and full-stack work.">
+<Base title="Projects" description="Projects by Manish Singh: computer vision, NLP, data engineering and full-stack work." searchable={false}>
   <div class="wrap page">
     <h1 class="page-title">Projects</h1>
     <p class="page-lede">What I have built, how it works, and what I decided along the way.</p>

@@ -23,8 +23,8 @@ Other commands:
 
 ```bash
 npm run check      # checks types and project files for mistakes
-npm run build      # builds the final site into dist/
-npm run preview    # shows the built site
+npm run build      # builds the final site into dist/ and makes the search index
+npm run preview    # shows the built site (with working search)
 ```
 
 ---
@@ -81,6 +81,20 @@ and add its name to the `art` list in `src/content.config.ts`.
 **Change colours.** Edit `src/styles/tokens.css`. Light and dark each have their own block.
 
 **Replace the résumé.** Overwrite `public/assets/resume.pdf` with the new file, keeping the same name.
+
+---
+
+## Search
+
+The **search** button in the header (or press `/` or `Ctrl+K`) searches the project pages,
+About and Now. It uses [Pagefind](https://pagefind.app): after `astro build`, Pagefind reads the
+finished pages and writes a small index to `dist/pagefind/`. Search then runs in the visitor's
+browser, with no server and no tracking.
+
+- Search only works on the built site (`npm run build && npm run preview`), not in `npm run dev`.
+- A page is searchable unless it passes `searchable={false}` to the `Base` layout
+  (the home page, the projects list and the 404 page do this, to avoid duplicate results).
+- To hide a part of a page from search, add `data-pagefind-ignore` to it.
 
 ---
 

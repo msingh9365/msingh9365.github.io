@@ -6,8 +6,16 @@ import { site } from '../config';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-interface Props { title?: string; description?: string; image?: string; }
-const { title, description = site.description, image = '/assets/images/og.png' } = Astro.props;
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  /** Include this page in site search (Pagefind). */
+  searchable?: boolean;
+  /** How the page is grouped in search results. */
+  kind?: 'Page' | 'Project';
+}
+const { title, description = site.description, image = '/assets/images/og.png', searchable = true, kind = 'Page' } = Astro.props;
 const fullTitle = title ? `${title} | ${site.name}` : site.title;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL(image, site.url).href;
@@ -23,7 +31,7 @@ const personLd = {
   ],
   url: `${site.url}/`,
   email: site.links.email,
-  sameAs: [site.links.github, site.links.linkedin, site.links.leetcode],
+  sameAs: [site.links.github, site.links.linkedin],
 };
 ---
 <!doctype html>
@@ -71,7 +79,11 @@ const personLd = {
   <body>
     <a class="skip" href="#main">Skip to content</a>
     <Header />
-    <main id="main">
+    <main
+      id="main"
+      data-pagefind-body={searchable ? '' : undefined}
+      data-pagefind-meta={searchable ? `type:${kind}` : undefined}
+    >
       <slot />
     </main>
     <Footer />

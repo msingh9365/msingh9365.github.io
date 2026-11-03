@@ -7,10 +7,10 @@ interface Props { project: Project; prev?: Project; next?: Project; }
 const { project, prev, next } = Astro.props;
 const d = project.data;
 ---
-<Base title={d.title} description={d.summary}>
+<Base title={d.title} description={d.summary} kind="Project">
   <div class="wrap page">
-    <a class="mono back" href="/projects/">← all projects</a>
-    <span class="kicker kicker-block">{tagLabel(d.tag)} · {d.kind}</span>
+    <a class="mono back" href="/projects/" data-pagefind-ignore>← all projects</a>
+    <span class="kicker kicker-block" data-pagefind-ignore>{tagLabel(d.tag)} · {d.kind}</span>
     <h1 class="page-title project-title">{d.title}</h1>
     <p class="page-lede">{d.summary}</p>
 

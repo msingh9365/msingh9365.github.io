@@ -11,7 +11,6 @@ export const site = {
   links: {
     github: 'https://github.com/msingh9365/',
     linkedin: 'https://www.linkedin.com/in/msingh9365/',
-    leetcode: 'https://leetcode.com/u/msingh9365/',
     email: 'mailto:msingh9365@gmail.com',
     resume: '/assets/resume.pdf',
   },
