@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import { status } from '../data/status';
+---
+<Base title="Status" description="What Manish Singh is working on right now.">
+  <div class="wrap page">
+    <div class="status-page">
+      <h1 class="page-title">~/status</h1>
+      <p class="meta">last updated {status.updated} · a snapshot of what I'm doing, not a plan</p>
+
+      <div class="svc-list">
+        {status.items.map((i) => (
+          <section class="svc" aria-label={i.name}>
+            <div class="svc-head">
+              <span class="svc-dot" aria-hidden="true">●</span>
+              <span class="svc-name">{i.name}</span>
+              <span class="svc-state">active (running)</span>
+            </div>
+            <p>{i.text}</p>
+          </section>
+        ))}
+      </div>
+
+      <h2 data-cmd="history">recent</h2>
+      <ol class="history">
+        {status.history.map((e, n) => (
+          <li><span class="meta history-n" aria-hidden="true">{String(status.history.length - n).padStart(3, ' ')}</span><span class="meta">{e.date}</span><span>{e.text}</span></li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</Base>

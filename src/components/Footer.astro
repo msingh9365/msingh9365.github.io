@@ -1,9 +1,11 @@
 ---
 import { site } from '../config';
+const built = new Date();
+const builtLabel = built.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Asia/Kolkata' });
 ---
 <footer class="footer">
   <div class="wrap">
-    <span>&copy; {new Date().getFullYear()} {site.name}</span>
+    <span>&copy; {built.getFullYear()} {site.name} · <span class="footer-build">last deploy <time datetime={built.toISOString()}>{builtLabel}</time></span></span>
     <ul>
       <li><a href={site.links.github}>GitHub</a></li>
       <li><a href={site.links.linkedin}>LinkedIn</a></li>

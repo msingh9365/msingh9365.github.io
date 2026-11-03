@@ -15,8 +15,8 @@ export const site = {
     resume: '/assets/resume.pdf',
   },
   nav: [
-    { href: '/projects/', label: 'Projects' },
-    { href: '/about/', label: 'About' },
-    { href: '/now/', label: 'Now' },
+    { href: '/projects/', label: '~/projects' },
+    { href: '/about/', label: '~/about' },
+    { href: '/status/', label: '~/status' },
   ],
 };

@@ -11,7 +11,7 @@ const current = (href: string) => path.startsWith(href);
     <a class="brand" href="/"><span class="avatar" aria-hidden="true">{site.initials}</span>{site.name}</a>
     <nav class="nav" aria-label="Main">
       {site.nav.map((l) => <a href={l.href} aria-current={current(l.href) ? 'page' : undefined}>{l.label}</a>)}
-      <a href={site.links.resume}>Resume</a>
+      <a href={site.links.resume}>resume.pdf</a>
     </nav>
     <Search />
     <ThemeToggle />

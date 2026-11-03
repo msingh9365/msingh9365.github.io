@@ -3,12 +3,23 @@ import Base from '../layouts/Base.astro';
 ---
 <Base title="Page not found" description="This page does not exist." searchable={false}>
   <div class="wrap notfound">
-    <span class="kicker kicker-block">404</span>
-    <h1 class="page-title">This page doesn't exist.</h1>
-    <p class="page-lede">The link may be old, or the address may have a typo.</p>
+    <pre class="nf-shell"><code><span class="t-prompt">manish@portfolio:~$</span> cd <span data-nf-path>this-page</span>
+<span class="t-err">bash: cd: <span data-nf-path>this-page</span>: No such file or directory</span></code></pre>
+    <h1 class="page-title">404 · page not found</h1>
+    <p class="page-lede">The link may be old, or the address may have a typo. Try one of these:</p>
     <div class="actions">
-      <a class="btn btn-primary" href="/">Go home</a>
-      <a class="btn" href="/projects/">See projects</a>
+      <a class="btn btn-primary" href="/">cd ~</a>
+      <a class="btn" href="/projects/">ls projects</a>
+      <button type="button" class="btn" data-nf-search>search</button>
     </div>
   </div>
 </Base>
+
+<script>
+  // Show the address the visitor tried (as text, never as HTML).
+  const path = decodeURIComponent(window.location.pathname).replace(/^\/+|\/+$/g, '') || '/';
+  document.querySelectorAll('[data-nf-path]').forEach((n) => { n.textContent = path; });
+  document.querySelector('[data-nf-search]')?.addEventListener('click', () => {
+    document.dispatchEvent(new CustomEvent('site-search', { detail: path.split(/[\/\-_]+/).pop() ?? '' }));
+  });
+</script>

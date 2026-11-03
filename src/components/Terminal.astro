@@ -1,0 +1,326 @@
+---
+// The interactive terminal on the home page. Every answer comes from the site's own data
+// (projects, about, status, links), so updating those files updates the terminal too.
+import { site } from '../config';
+import { allProjects, tagLabel, yearOf } from '../lib/projects';
+import { bio, education, careerLog, recognition, toolbox, terminalCard } from '../data/about';
+import { status } from '../data/status';
+
+const projects = (await allProjects()).map((p) => ({
+  id: p.id,
+  title: p.data.title,
+  tag: tagLabel(p.data.tag),
+  kind: p.data.kind,
+  year: yearOf(p.data.period),
+  period: p.data.period ?? '',
+  summary: p.data.summary,
+  stack: p.data.stack,
+  repo: p.data.links.repo ?? '',
+}));
+
+const data = {
+  name: site.name,
+  links: site.links,
+  whoami: terminalCard,
+  bio,
+  education: education.map((e) => ({ degree: e.degree, school: e.school, period: e.period, grade: e.grade })),
+  career: careerLog,
+  awards: recognition,
+  skills: toolbox,
+  status: status.items.map((i) => ({ name: i.name, short: i.short })),
+  projects,
+};
+// Escape "<" so the JSON can never close the <script> tag early.
+const json = JSON.stringify(data).replace(/</g, '\\u003c');
+const PROMPT = 'manish@portfolio:~$';
+---
+<div class="tty" data-tty>
+  <div class="tty-bar">
+    <span>manish@portfolio: ~</span>
+    <span class="tty-badge" aria-hidden="true">interactive</span>
+  </div>
+  <div class="tty-screen" data-tty-screen>
+    <div class="tty-out" role="log" aria-live="polite" aria-label="Terminal output" data-tty-out>
+      <div class="t-line"><span class="t-prompt">{PROMPT}</span> whoami</div>
+      <dl class="t-kv">
+        {terminalCard.map((r) => <div><dt>{r.key}</dt><dd>{r.value}</dd></div>)}
+      </dl>
+      <div class="t-line t-dim">type <b>help</b> and press enter · try <b>ls projects</b> or <b>open cbir</b></div>
+    </div>
+    <form class="tty-input" data-tty-form>
+      <label class="t-prompt" for="tty-cmd">{PROMPT}</label>
+      <input
+        id="tty-cmd"
+        name="cmd"
+        type="text"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+        enterkeyhint="send"
+        aria-describedby="tty-hint"
+      />
+      <span class="sr-only" id="tty-hint">Interactive terminal. Type help and press Enter for a list of commands. Tab completes.</span>
+    </form>
+  </div>
+  <script type="application/json" data-tty-data set:html={json} />
+</div>
+
+<script>
+  type KV = { key: string; value: string };
+  type Proj = { id: string; title: string; tag: string; kind: string; year: string; period: string; summary: string; stack: string[]; repo: string };
+  type Data = {
+    name: string;
+    links: Record<string, string>;
+    whoami: KV[];
+    bio: string[];
+    education: { degree: string; school: string; period: string; grade: string }[];
+    career: { role: string; org: string; period: string; note: string }[];
+    awards: { year: string; text: string }[];
+    skills: { group: string; items: string[] }[];
+    status: { name: string; short: string }[];
+    projects: Proj[];
+  };
+
+  const root = document.querySelector<HTMLElement>('[data-tty]');
+  if (root) init(root);
+
+  function init(root: HTMLElement) {
+    const data = JSON.parse(root.querySelector('[data-tty-data]')!.textContent || '{}') as Data;
+    const screen = root.querySelector<HTMLElement>('[data-tty-screen]')!;
+    const out = root.querySelector<HTMLElement>('[data-tty-out]')!;
+    const form = root.querySelector<HTMLFormElement>('[data-tty-form]')!;
+    const input = form.querySelector<HTMLInputElement>('input')!;
+    const PROMPT = 'manish@portfolio:~$';
+    const past: string[] = [];
+    let pos = 0;
+
+    // ── output helpers (text only, never innerHTML) ──
+    type Part = string | Node;
+    const el = (tag: string, cls: string, ...parts: Part[]) => {
+      const n = document.createElement(tag);
+      if (cls) n.className = cls;
+      n.append(...parts);
+      return n;
+    };
+    const link = (href: string, text: string) => {
+      const a = document.createElement('a');
+      a.href = href;
+      a.textContent = text;
+      if (/^https?:/.test(href)) { a.target = '_blank'; a.rel = 'noopener'; }
+      return a;
+    };
+    const line = (...parts: Part[]) => out.append(el('div', 't-line', ...parts));
+    const dim = (...parts: Part[]) => out.append(el('div', 't-line t-dim', ...parts));
+    const err = (text: string) => out.append(el('div', 't-line t-err', text));
+    const b = (text: string) => el('b', '', text);
+    const kv = (rows: [string, Part][]) => {
+      const dl = el('dl', 't-kv');
+      for (const [k, v] of rows) dl.append(el('div', '', el('dt', '', k), el('dd', '', v)));
+      out.append(dl);
+    };
+
+    // ── lookups ──
+    const words = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+    function findProject(q: string): Proj | undefined {
+      const w = words(q);
+      if (!w) return undefined;
+      return (
+        data.projects.find((p) => p.id === q.toLowerCase()) ||
+        data.projects.find((p) => p.id.startsWith(w.replace(/ /g, '-'))) ||
+        data.projects.find((p) => words(p.title).includes(w) || words(p.id).includes(w)) ||
+        data.projects.find((p) => w.split(' ').every((x) => words(p.title + ' ' + p.id + ' ' + p.stack.join(' ')).includes(x)))
+      );
+    }
+    const pages: Record<string, string> = {
+      '~': '/', home: '/', projects: '/projects/', about: '/about/', status: '/status/',
+      resume: data.links.resume, 'resume.pdf': data.links.resume,
+      github: data.links.github, linkedin: data.links.linkedin,
+    };
+
+    function go(href: string) {
+      dim('opening ', b(href), ' …');
+      window.setTimeout(() => {
+        if (/^https?:/.test(href)) window.open(href, '_blank', 'noopener');
+        else window.location.href = href;
+      }, 350);
+    }
+
+    function setTheme(mode: string) {
+      document.documentElement.dataset.theme = mode;
+      try { localStorage.setItem('ms-theme', mode); } catch {}
+    }
+
+    // ── commands ──
+    const help: [string, string][] = [
+      ['whoami', 'who I am, in one screen'],
+      ['ls [projects]', 'list pages or projects'],
+      ['cat <project>', 'short summary of a project'],
+      ['open <name>', 'open a project or page (also: cd)'],
+      ['skills', 'languages, tools, platforms'],
+      ['education', 'degrees'],
+      ['experience', 'work history'],
+      ['awards', 'recognition'],
+      ['status', 'what I am doing right now'],
+      ['contact', 'email and profiles'],
+      ['resume', 'open my résumé (PDF)'],
+      ['search <words>', 'search the whole site'],
+      ['theme [light|dark]', 'switch colours'],
+      ['clear', 'clear the screen'],
+    ];
+
+    const commands: Record<string, (args: string[]) => void> = {
+      help() {
+        kv(help.map(([c, d]) => [c, d]));
+        dim('tip: ', b('Tab'), ' completes, ', b('↑ ↓'), ' go through history');
+      },
+      whoami() {
+        kv(data.whoami.map((r) => [r.key, r.value]));
+      },
+      ls(args) {
+        const what = (args[0] || '').replace(/\/$/, '').replace(/^~\//, '');
+        if (!what || what === '.' || what === '~') {
+          line(b('projects/'), '  ', b('about/'), '  ', b('status/'), '  resume.pdf');
+          return;
+        }
+        if (what !== 'projects') return err(`ls: ${args[0]}: No such file or directory`);
+        for (const p of data.projects) {
+          out.append(el('div', 't-line t-row', link(`/projects/${p.id}/`, `${p.id}/`), el('span', 't-dim', `[${p.tag.toLowerCase()}${p.year ? ' · ' + p.year : ''}]`)));
+        }
+        dim(`${data.projects.length} projects · `, b('open <name>'), ' to read one');
+      },
+      cat(args) {
+        const q = args.join(' ');
+        if (!q) return err('cat: missing file — try cat cbir');
+        if (/^about(\.txt)?$/.test(q)) return data.bio.forEach((p) => line(p));
+        if (/^status/.test(q)) return commands.status([]);
+        const p = findProject(q);
+        if (!p) return err(`cat: ${q}: No such file or directory`);
+        line(b(p.title));
+        line(p.summary);
+        kv([
+          ['type', `${p.kind} · ${p.tag}`],
+          ...(p.period ? [['when', p.period] as [string, Part]] : []),
+          ['stack', p.stack.join(', ')],
+          ['read', link(`/projects/${p.id}/`, `/projects/${p.id}/`)],
+          ...(p.repo ? [['repo', link(p.repo, p.repo.replace(/^https:\/\//, ''))] as [string, Part]] : []),
+        ]);
+      },
+      open(args) {
+        const q = args.join(' ').replace(/^~\//, '').replace(/\/$/, '');
+        if (!q) return err('open: what should I open? try open cbir or open about');
+        if (pages[q]) return go(pages[q]);
+        const p = findProject(q);
+        if (!p) return err(`open: ${q}: not found — try ls projects`);
+        go(`/projects/${p.id}/`);
+      },
+      skills() {
+        kv(data.skills.map((s) => [s.group.toLowerCase(), s.items.join(', ')]));
+      },
+      education() {
+        for (const e of data.education) {
+          line(b(e.degree));
+          dim(`${e.school} · ${e.period} · ${e.grade}`);
+        }
+      },
+      experience() {
+        for (const c of data.career) {
+          line(b(c.role), el('span', 't-dim', ` · ${c.org} · ${c.period}`));
+          dim(c.note);
+        }
+      },
+      awards() {
+        kv(data.awards.map((a) => [a.year, a.text]));
+      },
+      status() {
+        for (const s of data.status) line(el('span', 't-ok', '● '), b(s.name), el('span', 't-dim', ' — '), s.short);
+        dim('more: ', link('/status/', '/status/'));
+      },
+      contact() {
+        kv([
+          ['email', link(data.links.email, data.links.email.replace('mailto:', ''))],
+          ['github', link(data.links.github, data.links.github.replace(/^https:\/\//, ''))],
+          ['linkedin', link(data.links.linkedin, data.links.linkedin.replace(/^https:\/\/(www\.)?/, ''))],
+        ]);
+      },
+      resume() { go(data.links.resume); },
+      search(args) {
+        const q = args.join(' ');
+        document.dispatchEvent(new CustomEvent('site-search', { detail: q }));
+        dim('searching for ', b(q || '…'));
+      },
+      theme(args) {
+        const cur = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+        const next = args[0] === 'light' || args[0] === 'dark' ? args[0] : cur === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+        dim(`theme: ${next}`);
+      },
+      clear() { out.replaceChildren(); },
+      history() { past.forEach((c, i) => dim(`${String(i + 1).padStart(3, ' ')}  ${c}`)); },
+      pwd() { line('/home/manish/portfolio'); },
+      date() { line(new Date().toString()); },
+      echo(args) { line(args.join(' ')); },
+      sudo() { err('manish is not in the sudoers file. This incident will be reported. (try open projects instead)'); },
+      exit() { dim('this terminal stays open — try ', b('open projects'), ' or ', b('contact')); },
+    };
+    // Friendly aliases
+    const alias: Record<string, string> = {
+      cd: 'open', man: 'help', '?': 'help', projects: 'ls', skill: 'skills', edu: 'education',
+      career: 'experience', work: 'experience', jobs: 'experience', now: 'status', email: 'contact',
+      cv: 'resume', find: 'search', grep: 'search', cls: 'clear', logout: 'exit', dir: 'ls',
+    };
+
+    function run(raw: string) {
+      const text = raw.trim();
+      line(el('span', 't-prompt', PROMPT), ' ', text);
+      if (!text) return;
+      past.push(text);
+      pos = past.length;
+      let [name, ...args] = text.split(/\s+/);
+      name = name.toLowerCase();
+      if (name === 'projects') args = ['projects'];
+      const cmd = commands[alias[name] ?? name];
+      if (cmd) cmd(args);
+      else err(`command not found: ${name} — type help`);
+    }
+
+    // ── tab completion ──
+    // Tab suggests the main command names only (shortcuts like `edu` still work when typed).
+    const names = Object.keys(commands).sort();
+    const targets = () => [...Object.keys(pages), ...data.projects.map((p) => p.id)];
+    function complete() {
+      const v = input.value;
+      const parts = v.split(/\s+/);
+      if (parts.length === 1) {
+        const hits = names.filter((n) => n.startsWith(parts[0].toLowerCase()));
+        if (hits.length === 1) input.value = hits[0] + ' ';
+        else if (hits.length > 1) { line(el('span', 't-prompt', PROMPT), ' ', v); dim(hits.join('  ')); }
+        return;
+      }
+      const last = parts[parts.length - 1].toLowerCase();
+      const hits = targets().filter((t) => t.startsWith(last));
+      if (hits.length === 1) { parts[parts.length - 1] = hits[0]; input.value = parts.join(' '); }
+      else if (hits.length > 1) { line(el('span', 't-prompt', PROMPT), ' ', v); dim(hits.join('  ')); }
+    }
+
+    // ── wiring ──
+    const scrollDown = () => { screen.scrollTop = screen.scrollHeight; };
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      run(input.value);
+      input.value = '';
+      scrollDown();
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab' && input.value.trim()) { e.preventDefault(); complete(); scrollDown(); }
+      else if (e.key === 'ArrowUp') { if (pos > 0) { e.preventDefault(); input.value = past[--pos]; } }
+      else if (e.key === 'ArrowDown') { e.preventDefault(); pos = Math.min(pos + 1, past.length); input.value = past[pos] ?? ''; }
+      else if (e.key === 'l' && e.ctrlKey) { e.preventDefault(); out.replaceChildren(); }
+    });
+    // Clicking anywhere on the screen focuses the prompt (but not when clicking a link or selecting text).
+    screen.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) return;
+      if (window.getSelection()?.toString()) return;
+      input.focus({ preventScroll: true });
+    });
+  }
+</script>

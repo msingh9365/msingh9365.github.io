@@ -1,10 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
-import NowCard from '../components/NowCard.astro';
+import Terminal from '../components/Terminal.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { site } from '../config';
 import { allProjects } from '../lib/projects';
 import { toolbox } from '../data/about';
+import { status } from '../data/status';
 
 const projects = await allProjects();
 const featured = projects.filter((p) => p.data.featured);
@@ -27,19 +28,32 @@ const others = projects.filter((p) => !p.data.featured);
           <li><b>739</b> GATE CSE</li>
         </ul>
       </div>
-      <div class="hero-side"><NowCard /></div>
+      <div class="hero-side"><Terminal /></div>
     </section>
 
     <section class="section" aria-labelledby="featured-title">
-      <div class="section-head"><h2 id="featured-title">Featured projects</h2><a href="/projects/">All projects</a></div>
+      <div class="section-head"><h2 id="featured-title" data-cmd="ls">projects --featured</h2><a href="/projects/">all projects →</a></div>
       <div class="cards">{featured.map((p) => <ProjectCard project={p} />)}</div>
       <div class="list">
         {others.map((p) => <div><a class="plain" href={`/projects/${p.id}/`}>{p.data.title}</a><span class="meta">{[p.data.kind, p.data.period].filter(Boolean).join(' · ')}</span></div>)}
       </div>
     </section>
 
+    <section class="section" aria-labelledby="status-title">
+      <div class="section-head"><h2 id="status-title" data-cmd="systemctl">status</h2><a href="/status/">~/status →</a></div>
+      <div class="strip">
+        {status.items.map((i) => (
+          <div class="strip-item">
+            <span class="svc-head"><span class="svc-dot" aria-hidden="true">●</span><span class="svc-name">{i.name}</span></span>
+            <span>{i.short}</span>
+          </div>
+        ))}
+      </div>
+      <p class="meta strip-note">last updated {status.updated}</p>
+    </section>
+
     <section class="section" aria-labelledby="toolbox-title">
-      <div class="section-head"><h2 id="toolbox-title">What I work with</h2><a href="/about/">More about me</a></div>
+      <div class="section-head"><h2 id="toolbox-title" data-cmd="cat">skills.txt</h2><a href="/about/">~/about →</a></div>
       <div class="strip">
         {toolbox.slice(1, 5).map((t) => <div class="strip-item"><span class="kicker">{t.group}</span><span>{t.items.slice(0, 4).join(', ')}</span></div>)}
       </div>

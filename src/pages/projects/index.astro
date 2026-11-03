@@ -8,7 +8,7 @@ const usedTags = TAGS.filter((t) => projects.some((p) => p.data.tag === t));
 ---
 <Base title="Projects" description="Projects by Manish Singh: computer vision, NLP, data engineering and full-stack work." searchable={false}>
   <div class="wrap page">
-    <h1 class="page-title">Projects</h1>
+    <h1 class="page-title">~/projects</h1>
     <p class="page-lede">What I have built, how it works, and what I decided along the way.</p>
     <div class="chips" role="group" aria-label="Filter by category">
       <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
@@ -23,7 +23,7 @@ const usedTags = TAGS.filter((t) => projects.some((p) => p.data.tag === t));
             <p class="tile-summary">{p.data.summary}</p>
             <ul class="stack">{p.data.stack.slice(0, 3).map((s) => <li>{s}</li>)}</ul>
           </div>
-          <div class="tile-foot"><span>{p.data.kind}</span><span class="tile-cta">Read more →</span></div>
+          <div class="tile-foot"><span>{p.data.kind}</span><span class="tile-cta" aria-hidden="true">$ open {p.id}</span></div>
         </a>
       ))}
     </div>

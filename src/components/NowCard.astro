@@ -1,9 +1,0 @@
----
-import { now } from '../data/now';
----
-<aside class="now" aria-label="What I'm doing now">
-  <div class="now-head"><a href="/now/">now →</a><span>updated {now.updated}</span></div>
-  <ul>
-    {now.items.map((i) => <li><span class="kicker">{i.kicker}</span><br />{i.short}</li>)}
-  </ul>
-</aside>

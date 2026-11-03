@@ -9,7 +9,7 @@ const d = project.data;
 ---
 <Base title={d.title} description={d.summary} kind="Project">
   <div class="wrap page">
-    <a class="mono back" href="/projects/" data-pagefind-ignore>← all projects</a>
+    <a class="mono back" href="/projects/" data-pagefind-ignore aria-label="Back to all projects">$ cd ..</a>
     <span class="kicker kicker-block" data-pagefind-ignore>{tagLabel(d.tag)} · {d.kind}</span>
     <h1 class="page-title project-title">{d.title}</h1>
     <p class="page-lede">{d.summary}</p>
@@ -19,22 +19,15 @@ const d = project.data;
         <ProjectArt art={d.art} class="art-cover" />
         <slot />
       </article>
-      <aside class="facts" aria-label="Project facts">
-        <div class="facts-head">FACTS</div>
-        <dl>
-          <div><dt>STATUS</dt><dd>{d.status}</dd></div>
-          {d.period && <div><dt>WHEN</dt><dd>{d.period}</dd></div>}
-          <div><dt>TYPE</dt><dd>{d.kind}</dd></div>
-          <div><dt>STACK</dt><dd>{d.stack.join(', ')}</dd></div>
-          <div>
-            <dt>LINKS</dt>
-            <dd class="facts-links">
-              {d.links.repo && <a href={d.links.repo}>Repository</a>}
-              {d.links.demo && <a href={d.links.demo}>Demo</a>}
-              {!d.links.repo && !d.links.demo && <span>None yet</span>}
-            </dd>
-          </div>
-        </dl>
+      <aside class="json" aria-label="Project facts">
+        <div class="json-head" data-pagefind-ignore><span class="t-prompt">$</span> cat project.json</div>
+        <pre class="json-body"><code>{'{'}
+  <span class="jk">"status"</span>: <span class="js">"{d.status}"</span>,{d.period && <Fragment>{'\n  '}<span class="jk">"when"</span>: <span class="js">"{d.period}"</span>,</Fragment>}
+  <span class="jk">"type"</span>: <span class="js">"{d.kind}"</span>,
+  <span class="jk">"stack"</span>: [{d.stack.map((s, i) => <Fragment>{'\n    '}<span class="js">"{s}"</span>{i < d.stack.length - 1 ? ',' : ''}</Fragment>)}
+  ],
+  <span class="jk">"repo"</span>: {d.links.repo ? <a href={d.links.repo}>"{d.links.repo.replace(/^https:\/\//, '')}"</a> : <span class="jn">null</span>}{d.links.demo && <Fragment>,{'\n  '}<span class="jk">"demo"</span>: <a href={d.links.demo}>"{d.links.demo.replace(/^https:\/\//, '')}"</a></Fragment>}
+{'}'}</code></pre>
       </aside>
     </div>
 

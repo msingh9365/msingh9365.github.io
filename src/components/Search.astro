@@ -169,6 +169,13 @@
 
   openBtn.addEventListener('click', openSearch);
 
+  // The home-page terminal's `search <words>` command opens this box with the words filled in.
+  document.addEventListener('site-search', (e) => {
+    openSearch();
+    input.value = String((e as CustomEvent).detail ?? '');
+    void runSearch();
+  });
+
   document.addEventListener('keydown', (e) => {
     const t = e.target as HTMLElement | null;
     const typing = !!t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable);

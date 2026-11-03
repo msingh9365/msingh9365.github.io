@@ -5,13 +5,13 @@ import { bio, education, careerLog, recognition, toolbox, terminalCard } from '.
 ---
 <Base title="About" description="About Manish Singh: experience, education, skills and how to get in touch.">
   <div class="wrap page">
-    <h1 class="page-title">About</h1>
+    <h1 class="page-title">~/about</h1>
     <div class="about">
       <div class="about-copy">
         <p class="bio-lead">{bio[0]}</p>
         {bio.slice(1).map((b) => <p class="bio-more">{b}</p>)}
 
-        <h2>Education</h2>
+        <h2 data-cmd="cat">education.md</h2>
         <div class="edu">
           {education.map((e) => (
             <article class="edu-item">
@@ -28,7 +28,7 @@ import { bio, education, careerLog, recognition, toolbox, terminalCard } from '.
           ))}
         </div>
 
-        <h2>Career log</h2>
+        <h2 data-cmd="tail">career.log</h2>
         <ol class="log">
           {careerLog.map((c) => (
             <li>
@@ -38,12 +38,12 @@ import { bio, education, careerLog, recognition, toolbox, terminalCard } from '.
           ))}
         </ol>
 
-        <h2>Recognition</h2>
+        <h2 data-cmd="cat">awards.txt</h2>
         <ul class="awards">
           {recognition.map((r) => <li><span class="meta">{r.year}</span><span>{r.text}</span></li>)}
         </ul>
 
-        <h2>Toolbox</h2>
+        <h2 data-cmd="ls">toolbox/</h2>
         {toolbox.map((t) => (
           <div class="toolbox-group">
             <span class="kicker">{t.group}</span>
@@ -51,7 +51,7 @@ import { bio, education, careerLog, recognition, toolbox, terminalCard } from '.
           </div>
         ))}
 
-        <h2>Contact</h2>
+        <h2 data-cmd="cat">contact.txt</h2>
         <p class="bio-more">
           Open to interesting conversations, collaborations and new opportunities. Email is the best way:{' '}
           <a href={site.links.email}>{site.links.email.replace('mailto:', '')}</a>
@@ -63,7 +63,7 @@ import { bio, education, careerLog, recognition, toolbox, terminalCard } from '.
 
       <aside class="about-side" aria-label="Summary">
         <div class="term">
-          <div class="term-bar"><span></span><span></span><span></span><b>about.txt</b></div>
+          <div class="term-bar"><span class="t-prompt">$</span> whoami</div>
           <dl>
             {terminalCard.map((r) => <div><dt>{r.key}</dt><dd>{r.value}</dd></div>)}
           </dl>

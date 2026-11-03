@@ -1,6 +1,7 @@
 # Manish Singh — Portfolio
 
-My personal site: projects, background, and what I'm working on now.
+My personal site: projects, background, and what I'm working on now, with a small
+interactive terminal on the home page.
 
 **Live site:** https://msingh9365.github.io/
 
@@ -35,10 +36,12 @@ npm run preview    # shows the built site (with working search)
 src/
   config.ts              # your name, links, the menu, the tag above the headline
   data/about.ts          # About page: bio, education, career log, awards, skills
-  data/now.ts            # Now page (and the "now" card on the home page)
+  data/status.ts         # /status/ page, the status strip on the home page, the `status` command
   content/projects/*.md  # one file per project
+  components/Terminal.astro    # the interactive terminal on the home page
   components/ProjectArt.astro  # the small diagram for each project
-  pages/                 # one file per page (index, about, now, projects, 404)
+  components/Search.astro      # the search button and search box
+  pages/                 # one file per page (index, about, status, projects, 404)
   styles/tokens.css      # all colours and fonts
 public/
   assets/resume.pdf      # your résumé (all "Resume" links point here)
@@ -50,7 +53,14 @@ public/
 
 ## Common changes
 
-**Update the Now page.** Edit `src/data/now.ts` and change `updated` to today's date.
+**Update your status.** Edit `src/data/status.ts` and change `updated` to today's date.
+(The old `/now/` address still works: it redirects to `/status/`.)
+
+**The home-page terminal.** Visitors can type `help`, `whoami`, `ls projects`, `cat <project>`,
+`open <project>`, `skills`, `education`, `experience`, `awards`, `status`, `contact`, `resume`,
+`search <words>`, `theme light|dark` and `clear` (Tab completes, ↑/↓ for history). Every answer
+comes from the files above, so updating them updates the terminal too. To add a command, add a
+function to `commands` in `src/components/Terminal.astro` and a line to its `help` list.
 
 **Add a project.** Copy a file in `src/content/projects/`, give it a new name (the name becomes the
 web address, like `/projects/my-project/`), and fill in the fields at the top:
@@ -87,7 +97,7 @@ and add its name to the `art` list in `src/content.config.ts`.
 ## Search
 
 The **search** button in the header (or press `/` or `Ctrl+K`) searches the project pages,
-About and Now. It uses [Pagefind](https://pagefind.app): after `astro build`, Pagefind reads the
+About and Status. It uses [Pagefind](https://pagefind.app): after `astro build`, Pagefind reads the
 finished pages and writes a small index to `dist/pagefind/`. Search then runs in the visitor's
 browser, with no server and no tracking.
 
